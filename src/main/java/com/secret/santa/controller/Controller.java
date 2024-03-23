@@ -1,6 +1,6 @@
 package com.secret.santa.controller;
 
-import com.secret.santa.dto.Group;
+import com.secret.santa.dto.GroupDto;
 import com.secret.santa.service.GroupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +19,12 @@ public class Controller {
     GroupService groupService;
 
     @PostMapping("/group")
-    public ResponseEntity<String> addGroup(@Valid @RequestBody Group group) {
-        return groupService.addGroup(group);
+    public ResponseEntity<String> addGroup(@Valid @RequestBody GroupDto groupDto) {
+
+        return groupService.addGroup(groupDto);
     }
 
-//    @GetMapping("/groups")
-//    public ResponseEntity<String> allGroups(){return groupService.allGroupsList();}
+    @GetMapping("/groups")
+    public ResponseEntity<String> allGroups(){return groupService.allGroupsList();}
 
 }

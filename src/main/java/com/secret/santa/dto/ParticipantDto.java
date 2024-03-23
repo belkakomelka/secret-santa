@@ -3,20 +3,16 @@ package com.secret.santa.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Builder
-public class Group {
-    private int id;
+public class ParticipantDto {
+    private Long id;
 
     @NotBlank
     private String name;
 
-    private String description;
+    private String wish;
 
-    private List<Participant> participantList;
-
+    private ParticipantDto participantDto;
 }

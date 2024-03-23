@@ -4,15 +4,18 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
-public class Participant {
-    private int id;
+public class GroupDto {
+    private Long id;
 
     @NotBlank
     private String name;
 
-    private String wish;
+    private String description;
 
-    private Participant participant;
+    private List<ParticipantDto> participantDtoList;
+
 }

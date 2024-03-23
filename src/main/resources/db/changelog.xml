@@ -25,7 +25,7 @@
         <createTable tableName="groups">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" />
-            </column>т
+            </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
