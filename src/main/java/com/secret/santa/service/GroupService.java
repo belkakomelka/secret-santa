@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final ParticipantRepository participantRepository;
     private final ObjectMapper objectMapping;
+    private final TransactionTemplate transactionTemplate;
 
     public ResponseEntity<String> addGroup(GroupDto groupDto){
         try {
@@ -40,7 +42,7 @@ public class GroupService {
 
             groupRepository.save(groupEntity);
             log.info("Группа сохранена в базу с идентификатором " + groupEntity.getId().toString());
-            return ResponseEntity.ok(groupEntity.getId().toString());
+            return new ResponseEntity<>(groupEntity.getId().toString(), HttpStatus.OK);
         } catch (JsonProcessingException | RuntimeException e) {
             log.error("Внутрення ошибка сервиса " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,7 +63,7 @@ public class GroupService {
                     .collect(Collectors.toList());
 
             log.info("Выгрузка информации обо всех группах" + objectMapping.writeValueAsString(allGroupsRs));
-            return ResponseEntity.ok(objectMapping.writeValueAsString(allGroupsRs));
+            return new ResponseEntity(objectMapping.writeValueAsString(allGroupsRs), HttpStatus.OK);
 
         } catch (JsonProcessingException | RuntimeException e) {
             log.error("Внутрення ошибка сервиса " + e.getMessage());
@@ -102,7 +104,7 @@ public class GroupService {
                     .participantDtoList(participantDto) // в случае если тут отсутствуют участники, просто null
                     .build();
 
-            return ResponseEntity.ok(objectMapping.writeValueAsString(groupRs));
+            return new ResponseEntity(objectMapping.writeValueAsString(groupRs), HttpStatus.OK);
         } catch (RuntimeException | JsonProcessingException e) {
             log.error("Внутрення ошибка сервиса " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -111,6 +113,22 @@ public class GroupService {
 
 
     public ResponseEntity<String> changeGroupParams(String id, GroupChangeParamsDto changeParamsDto){
-        return ResponseEntity.ok("dkkdd");
+        log.info("Получен запрос для изменения параметров группы");
+        Optional<Group> groupOptional = groupRepository.findById(id);
+        Group groupDb;
+        if (groupOptional.isPresent()){
+            groupDb = groupOptional.get();
+            transactionTemplate.execute(status -> {
+                groupDb.setDescription(changeParamsDto.getDescription());
+                groupDb.setName(changeParamsDto.getName());
+                groupRepository.save(groupDb);
+                return null;
+            });
+        } else{
+            log.error("Группа с данным идентификатором отсутствует");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        log.info("Параметры группы изменены " + groupDb);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

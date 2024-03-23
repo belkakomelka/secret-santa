@@ -38,7 +38,13 @@ public class Controller {
     }
 
     @PutMapping("/group/{id}")
-    public ResponseEntity<String> changeGroupParams(@PathVariable("id") String id, GroupChangeParamsDto groupDto){
+    public ResponseEntity<String> changeGroupParams(@PathVariable("id") String id,
+                                                    @Valid @RequestBody GroupChangeParamsDto groupDto,
+                                                    BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            log.warn("Ошибка валидации");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return groupService.changeGroupParams(id, groupDto);
     }
 }
