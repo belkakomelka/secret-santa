@@ -55,6 +55,7 @@ public class TossingService {
                             .participantDto(buildRecipient((Long) pairs.get(pairs.size()-1).b))
                             .build());
 
+                    savingRecipient(participantTossing);
                     return new ResponseEntity<>(objectMapping.writeValueAsString(participantTossing), HttpStatus.OK);
 
                 } else {
@@ -77,7 +78,6 @@ public class TossingService {
         for (Participant participant: participantList) {
             participants.add(participant.getId());
         }
-        Collections.shuffle(participants);
         List<Pair> pairs = new ArrayList<>();
         for (int i = 0; i < participants.size()-1; i++) {
             pairs.add(new Pair(participants.get(i), participants.get(i + 1)));
@@ -99,6 +99,22 @@ public class TossingService {
             throw new RuntimeException();
         }
 
+    }
+
+    void savingRecipient(List<ParticipantTossingDto> participantList){
+        for (ParticipantTossingDto participant: participantList){
+            Optional<Participant> participantDbOptional = participantRepository.findById(String.valueOf(participant.getId()));
+            if (participantDbOptional.isPresent()){
+                Participant participantDb = participantDbOptional.get();
+                participantDb.setRecipient(Participant.builder()
+                        .name(participant.getParticipantDto().getName())
+                        .wish(participant.getParticipantDto().getWish())
+                        .id(participant.getParticipantDto().getId())
+                        .build());
+
+                participantRepository.save(participantDb);
+            }
+        }
     }
 }
 
