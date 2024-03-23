@@ -7,9 +7,10 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "participant")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
 @Builder
 @AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class Participant {
     @Id
@@ -28,7 +29,7 @@ public class Participant {
     String wish;
 
     @OneToOne
-    @JoinColumn(name = "recipient_id")
+    @JoinColumn(name = "recipient")
     Participant recipient;
 
 }

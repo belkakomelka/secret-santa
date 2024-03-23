@@ -10,8 +10,9 @@ import java.util.List;
 @Entity
 @Table(name = "groups")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group {
