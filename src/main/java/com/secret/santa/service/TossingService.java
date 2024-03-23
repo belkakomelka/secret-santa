@@ -31,7 +31,7 @@ public class TossingService {
     public ResponseEntity<String> tossingParticipants(String id) {
         try {
             log.info("Принят запрос для жеребьевки в группе");
-            Optional<Group> groupOptional = groupRepository.findById(id);
+            Optional<Group> groupOptional = groupRepository.findById(Long.valueOf(id));
             if (groupOptional.isPresent()) {
                 Group groupDb = groupOptional.get();
                 if (participantRepository.countByGroupId(groupDb.getId()) >= 3) {
@@ -87,7 +87,7 @@ public class TossingService {
     }
 
     private ParticipantDtoNoRecipientFilter buildRecipient(Long id){
-        Optional<Participant> recepientOptional = participantRepository.findById(String.valueOf(id));
+        Optional<Participant> recepientOptional = participantRepository.findById(id);
         if (recepientOptional.isPresent()){
             Participant recipient = recepientOptional.get();
             return ParticipantDtoNoRecipientFilter.builder()
@@ -103,7 +103,7 @@ public class TossingService {
 
     void savingRecipient(List<ParticipantTossingDto> participantList){
         for (ParticipantTossingDto participant: participantList){
-            Optional<Participant> participantDbOptional = participantRepository.findById(String.valueOf(participant.getId()));
+            Optional<Participant> participantDbOptional = participantRepository.findById(participant.getId());
             if (participantDbOptional.isPresent()){
                 Participant participantDb = participantDbOptional.get();
                 participantDb.setRecipient(Participant.builder()

@@ -27,7 +27,7 @@ public class ParticipantService {
         try {
             log.info("Принят запрос для сохранения нового участника " + objectMapping.writeValueAsString(participantDto));
 
-            Optional<Group> groupOptional = groupRepository.findById(id);
+            Optional<Group> groupOptional = groupRepository.findById(Long.valueOf(id));
             Participant participantEntity;
             if (groupOptional.isPresent()){
                 participantEntity = Participant.builder()

@@ -74,7 +74,7 @@ public class GroupService {
     public ResponseEntity<String> getAllGroupInfo(String id){
         try{
             log.info("Получен запрос для выгрузки информации о группе с id " + id);
-            Optional<Group> groupDbOptional = groupRepository.findById(id);
+            Optional<Group> groupDbOptional = groupRepository.findById(Long.valueOf(id));
             Group groupDb;
             List<Participant> participantListDb;
 
@@ -114,7 +114,7 @@ public class GroupService {
 
     public ResponseEntity<String> changeGroupParams(String id, GroupChangeParamsDto changeParamsDto){
         log.info("Получен запрос для изменения параметров группы");
-        Optional<Group> groupOptional = groupRepository.findById(id);
+        Optional<Group> groupOptional = groupRepository.findById(Long.valueOf(id));
         Group groupDb;
         if (groupOptional.isPresent()){
             groupDb = groupOptional.get();
@@ -134,7 +134,7 @@ public class GroupService {
 
     public ResponseEntity<String> deleteGroup(String id){
         log.info("Получен запрос для удаления группы");
-        Optional<Group> groupOptional = groupRepository.findById(id);
+        Optional<Group> groupOptional = groupRepository.findById(Long.valueOf(id));
         if (groupOptional.isPresent()){
             Group groupDb = groupOptional.get();
             transactionTemplate.execute(status -> {
