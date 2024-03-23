@@ -47,4 +47,9 @@ public class Controller {
         }
         return groupService.changeGroupParams(id, groupDto);
     }
+
+    @DeleteMapping("/group/{id}")
+    public ResponseEntity<String> deleteGroup(@PathVariable("id") String id){
+        return groupService.deleteGroup(id);
+    }
 }

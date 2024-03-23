@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ParticipantRepository extends JpaRepository<Participant, String> {
     List<Participant> getByGroupId(Long groupId);
+    void deleteAllByGroupId(Long groupId);
 }

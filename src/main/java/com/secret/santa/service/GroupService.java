@@ -131,4 +131,22 @@ public class GroupService {
         log.info("Параметры группы изменены " + groupDb);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    public ResponseEntity<String> deleteGroup(String id){
+        log.info("Получен запрос для удаления группы");
+        Optional<Group> groupOptional = groupRepository.findById(id);
+        if (groupOptional.isPresent()){
+            Group groupDb = groupOptional.get();
+            transactionTemplate.execute(status -> {
+                participantRepository.deleteAllByGroupId(groupDb.getId());
+                groupRepository.delete(groupDb);
+                return null;
+            });
+        } else{
+            log.error("Группа с данным идентификатором отсутствует");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        log.info("Группа удалена");
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
