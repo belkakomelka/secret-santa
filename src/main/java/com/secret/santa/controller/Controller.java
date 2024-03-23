@@ -5,6 +5,7 @@ import com.secret.santa.dto.ParticipantDto;
 import com.secret.santa.dto.filtredDto.changeGroupParams.GroupChangeParamsDto;
 import com.secret.santa.service.GroupService;
 import com.secret.santa.service.ParticipantService;
+import com.secret.santa.service.TossingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,9 @@ public class Controller {
 
     @Autowired
     ParticipantService participantService;
+
+    @Autowired
+    TossingService tossingService;
 
     @PostMapping("/group")
     public ResponseEntity<String> addGroup(@Valid @RequestBody GroupDto groupDto, BindingResult bindingResult) {
@@ -66,5 +70,10 @@ public class Controller {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return participantService.addParticipant(id, participantDto);
+    }
+
+    @PostMapping("/group/{id}/toss")
+    public ResponseEntity<String> tossing(@PathVariable String id){
+        return tossingService.tossingParticipants(id);
     }
 }

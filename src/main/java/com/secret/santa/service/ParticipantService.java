@@ -6,14 +6,12 @@ import com.secret.santa.database.dao.Group;
 import com.secret.santa.database.dao.Participant;
 import com.secret.santa.database.repository.GroupRepository;
 import com.secret.santa.database.repository.ParticipantRepository;
-import com.secret.santa.dto.GroupDto;
 import com.secret.santa.dto.ParticipantDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Optional;
 
@@ -24,7 +22,6 @@ public class ParticipantService {
     private final GroupRepository groupRepository;
     private final ParticipantRepository participantRepository;
     private final ObjectMapper objectMapping;
-    private final TransactionTemplate transactionTemplate;
 
     public ResponseEntity<String> addParticipant(String id, ParticipantDto participantDto){
         try {
