@@ -1,8 +1,10 @@
 package com.secret.santa.controller;
 
 import com.secret.santa.dto.GroupDto;
+import com.secret.santa.dto.ParticipantDto;
 import com.secret.santa.dto.filtredDto.changeGroupParams.GroupChangeParamsDto;
 import com.secret.santa.service.GroupService;
+import com.secret.santa.service.ParticipantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +18,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 public class Controller {
-
     @Autowired
     GroupService groupService;
+
+    @Autowired
+    ParticipantService participantService;
 
     @PostMapping("/group")
     public ResponseEntity<String> addGroup(@Valid @RequestBody GroupDto groupDto, BindingResult bindingResult) {
@@ -51,5 +55,16 @@ public class Controller {
     @DeleteMapping("/group/{id}")
     public ResponseEntity<String> deleteGroup(@PathVariable("id") String id){
         return groupService.deleteGroup(id);
+    }
+
+    @PostMapping("/group/{id}/participant")
+    public ResponseEntity<String> addParticipant(@PathVariable("id") String id,
+                                                 @Valid @RequestBody ParticipantDto participantDto,
+                                                 BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            log.warn("Ошибка валидации");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return participantService.addParticipant(id, participantDto);
     }
 }
