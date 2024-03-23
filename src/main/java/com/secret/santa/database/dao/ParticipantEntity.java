@@ -29,7 +29,7 @@ public class ParticipantEntity {
     String wish;
 
     @OneToOne
-    @JoinColumn(name = "recipient")
+    @JoinColumn(name = "recipient_id")
     ParticipantEntity recipient;
 
 }

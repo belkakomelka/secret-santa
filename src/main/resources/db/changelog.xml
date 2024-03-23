@@ -12,8 +12,11 @@
             <column name="wish" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="recipient_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="recipient" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="group_id" type="bigint">
+                <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>
@@ -23,8 +26,8 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" />
             </column>
-            <column name="participant_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="participant" type="bigint">
+                <constraints nullable="false" />
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
@@ -36,17 +39,17 @@
     </changeSet>
 
     <changeSet id="ss-3" author="user">
-        <createSequence sequenceName="sequence_group" incrementBy="1" />
+        <createSequence sequenceName="sequence_group" startValue="1"/>
     </changeSet>
 
     <changeSet id="ss-4" author="user">
-        <createSequence sequenceName="sequence_participant" incrementBy="1" />
+        <createSequence sequenceName="sequence_participant" startValue="1"/>
     </changeSet>
 
     <changeSet id="ss-5" author="user">
         <addForeignKeyConstraint constraintName="fk_group"
                                  baseTableName="participant"
-                                 baseColumnNames="participant_id"
+                                 baseColumnNames="group_id"
                                  referencedTableName="group"
                                  referencedColumnNames="id"/>
     </changeSet>
