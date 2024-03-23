@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secret.santa.database.dao.Group;
 import com.secret.santa.database.repository.GroupRepository;
 import com.secret.santa.dto.GroupDto;
+import com.secret.santa.dto.filtredDto.GroupDtoParticipantFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,8 +45,8 @@ public class GroupService {
         try {
             log.info("Получен запрос для выгрузки информации о всех группах");
             List<Group> allGroupsDb = groupRepository.findAll();
-            List<GroupDto> allGroupsRs = allGroupsDb.stream()
-                    .map(group -> GroupDto.builder()
+            List<GroupDtoParticipantFilter> allGroupsRs = allGroupsDb.stream()
+                    .map(group -> GroupDtoParticipantFilter.builder()
                             .id(group.getId())
                             .name(group.getName())
                             .description(group.getDescription())
