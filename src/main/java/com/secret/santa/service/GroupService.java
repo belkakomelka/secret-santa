@@ -10,6 +10,7 @@ import com.secret.santa.dto.GroupDto;
 import com.secret.santa.dto.filtredDto.allGroupInfo.GroupFiltredRecepientDto;
 import com.secret.santa.dto.filtredDto.allGroupInfo.ParticipantDtoRecipientFilter;
 import com.secret.santa.dto.filtredDto.allGroupsInfo.GroupDtoParticipantFilter;
+import com.secret.santa.dto.filtredDto.changeGroupParams.GroupChangeParamsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -108,4 +109,8 @@ public class GroupService {
         }
     }
 
+
+    public ResponseEntity<String> changeGroupParams(String id, GroupChangeParamsDto changeParamsDto){
+        return ResponseEntity.ok("dkkdd");
+    }
 }

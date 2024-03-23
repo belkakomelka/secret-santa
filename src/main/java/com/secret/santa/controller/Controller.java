@@ -1,6 +1,7 @@
 package com.secret.santa.controller;
 
 import com.secret.santa.dto.GroupDto;
+import com.secret.santa.dto.filtredDto.changeGroupParams.GroupChangeParamsDto;
 import com.secret.santa.service.GroupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,4 +37,8 @@ public class Controller {
         return groupService.getAllGroupInfo(id);
     }
 
+    @PutMapping("/group/{id}")
+    public ResponseEntity<String> changeGroupParams(@PathVariable("id") String id, GroupChangeParamsDto groupDto){
+        return groupService.changeGroupParams(id, groupDto);
+    }
 }

@@ -17,7 +17,3 @@ spring:
     properties:
       hibernate:
         generate_statistics: false
-#        ddl-auto: create
-#
-#    hibernate:
-#      ddl-auto: create
