@@ -1,0 +1,53 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="ss-1" author="user">
+        <createTable tableName="participant">
+            <column name="id" type="bigint" >
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="wish" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="recipient_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="ss-2" author="user">
+        <createTable tableName="group">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="participant_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="ss-3" author="user">
+        <createSequence sequenceName="sequence_group" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="ss-4" author="user">
+        <createSequence sequenceName="sequence_participant" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="ss-5" author="user">
+        <addForeignKeyConstraint constraintName="fk_group"
+                                 baseTableName="participant"
+                                 baseColumnNames="participant_id"
+                                 referencedTableName="group"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

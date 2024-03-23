@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5433/secret-santa
+    platform: postgres
+    initialization-mode: always
+    continue-on-error: true
+    hikari:
+      schema: secret_santa
+  liquibase:
+    change-log: classpath:db/changelog.xml
+  jpa:
+    show-sql: false
+    database: postgresql
+    properties:
+      hibernate:
+        generate_statistics: false
