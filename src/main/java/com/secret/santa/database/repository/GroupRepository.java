@@ -1,8 +1,7 @@
 package com.secret.santa.database.repository;
 
-import com.secret.santa.database.dao.GroupEntity;
-import com.secret.santa.database.dao.ParticipantEntity;
+import com.secret.santa.database.dao.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GroupRepository extends JpaRepository<GroupEntity, String> {
+public interface GroupRepository extends JpaRepository<Group, String> {
 }

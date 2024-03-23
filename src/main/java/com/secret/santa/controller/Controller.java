@@ -1,11 +1,12 @@
 package com.secret.santa.controller;
 
 import com.secret.santa.dto.Group;
-import com.secret.santa.service.AddGroupService;
+import com.secret.santa.service.GroupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     @Autowired
-    AddGroupService groupService;
+    GroupService groupService;
 
     @PostMapping("/group")
     public ResponseEntity<String> addGroup(@Valid @RequestBody Group group) {
         return groupService.addGroup(group);
     }
+
+//    @GetMapping("/groups")
+//    public ResponseEntity<String> allGroups(){return groupService.allGroupsList();}
 
 }

@@ -12,8 +12,12 @@ spring:
   liquibase:
     change-log: classpath:db/changelog.xml
   jpa:
-    show-sql: false
+    show-sql: true
     database: postgresql
     properties:
       hibernate:
         generate_statistics: false
+#        ddl-auto: create
+#
+#    hibernate:
+#      ddl-auto: create

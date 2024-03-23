@@ -1,6 +1,5 @@
 package com.secret.santa.database.dao;
 
-import com.secret.santa.dto.Group;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ParticipantEntity {
+public class Participant {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "sequence_participant")
     @SequenceGenerator(name = "sequence_participant", sequenceName = "sequence_participant", allocationSize = 1)
@@ -20,7 +19,7 @@ public class ParticipantEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
-    GroupEntity group;
+    Group group;
 
     @Column(name = "name", nullable = false)
     String name;
@@ -30,6 +29,6 @@ public class ParticipantEntity {
 
     @OneToOne
     @JoinColumn(name = "recipient_id")
-    ParticipantEntity recipient;
+    Participant recipient;
 
 }

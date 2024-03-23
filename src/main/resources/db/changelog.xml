@@ -13,22 +13,19 @@
                 <constraints nullable="true" />
             </column>
             <column name="recipient" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="group_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="ss-2" author="user">
-        <createTable tableName="group">
+        <createTable tableName="groups">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" />
-            </column>
-            <column name="participant" type="bigint">
-                <constraints nullable="false" />
-            </column>
+            </column>т
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -50,7 +47,7 @@
         <addForeignKeyConstraint constraintName="fk_group"
                                  baseTableName="participant"
                                  baseColumnNames="group_id"
-                                 referencedTableName="group"
+                                 referencedTableName="groups"
                                  referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>
